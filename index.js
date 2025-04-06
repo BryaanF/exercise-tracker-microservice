@@ -56,6 +56,18 @@ app.post('/api/users', async (req, res) => {
   }
 });
 
+app.get('/api/users', async (req, res) => {
+  try {
+    // Ambil semua user dari database
+    const users = await User.find({}, { username: 1, _id: 1 });
+    // Kirim respon JSON
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 //endpoint untuk menyimpan data exercise dari seorang user
 app.post('/api/users/:_id/exercises', async (req, res) => {
   const { _id } = req.params;
